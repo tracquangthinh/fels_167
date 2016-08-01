@@ -20,4 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  home_title: "Home"
+  help_title: "Help"
+  about_title: "About"
+  login_title: "Login"
+  e_learning: "E Learning"
+  willbesoon: "This app will be appeared soon!!"
+  address: "Address: 18F KeangNam, Tu Liem, Ha Noi"

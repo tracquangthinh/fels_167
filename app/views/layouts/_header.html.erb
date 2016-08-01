@@ -1,0 +1,20 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div style="background-color: white">
+    <div class="container">
+      <%= link_to image_tag("logo_framgia.png", height: 80, width: 80),
+        root_path %>
+      <%= link_to t(:Elearning), root_path, id: "logo" %>
+    </div>
+  </div>
+  <div style="background-color: #a70e1a">
+    <div class="container" >
+        <nav>
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to t(:home_title), home_path , id: "word_header" %></li>
+          <li><%= link_to t(:help_title), help_path , id: "word_header" %></li>
+          <li><%= link_to t(:login_title), "#" , id: "word_header" %></li>
+        </ul>
+        </nav>
+    </div>
+  </div>
+</header>
