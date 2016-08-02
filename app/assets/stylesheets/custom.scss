@@ -331,3 +331,15 @@ span.picture {
 .my-width{
   width: 250px;
 }
+
+/* sign up */
+.radioGroup{
+  display: block;
+  span{
+    display: inline-block;
+  }
+  label{
+    margin-left: 20px;
+    font-weight: normal;
+  }
+}
