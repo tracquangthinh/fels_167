@@ -73,13 +73,17 @@ p{
 
 /*footer*/
 footer {
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
   left: 0;
+  margin-left: 150px;
+  margin-right: 100px;
+  background-color: white;
   /*padding: 1rem;*/
   width: 100%;
   height: 50px;
+
 }
 footer a {
   color: #555;
@@ -109,12 +113,11 @@ footer ul li {
   width: 380px;
 }
 .myfooter{
-    margin: auto;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    vertical-align: baseline;
-    margin-right: 0px;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  margin-right: 0px;
 }
 
 /*debug*/
@@ -330,4 +333,34 @@ span.picture {
 }
 .my-width{
   width: 250px;
+}
+
+/* sign up */
+.radioGroup{
+  display: block;
+  span{
+    display: inline-block;
+  }
+  label{
+    margin-left: 20px;
+    font-weight: normal;
+  }
+}
+
+.my-avatar-home{
+  width: 80px;
+  height: 80px;
+}
+.my-username{
+  font-size: 20px;
+  margin-left: 5px;
+  font-style: none;
+  font-weight: 0.5px;
+}
+.my-h1{
+  text-align: center;
+}
+.my-margin-right{
+  float: right;
+  margin-right: 80px;
 }
