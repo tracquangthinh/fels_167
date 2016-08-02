@@ -1,20 +1,43 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
-  <div style="background-color: white">
+  <div id="my-header-color">
     <div class="container">
       <%= link_to image_tag("logo_framgia.png", height: 80, width: 80),
         root_path %>
       <%= link_to t(:Elearning), root_path, id: "logo" %>
     </div>
   </div>
-  <div style="background-color: #a70e1a">
-    <div class="container" >
-        <nav>
-        <ul class="nav navbar-nav navbar-right">
-          <li><%= link_to t(:home_title), home_path , id: "word_header" %></li>
-          <li><%= link_to t(:help_title), help_path , id: "word_header" %></li>
-          <li><%= link_to t(:login_title), "#" , id: "word_header" %></li>
-        </ul>
-        </nav>
+  <div id="my-background-color">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+          <nav>
+            <ul class="nav navbar-nav navbar-right">
+              <li><%= link_to t(:home_title), home_path,
+                id: "word-header" %></li>
+              <li><%= link_to t(:help_title), help_path,
+                id: "word-header" %></li>
+              <% if logged_in? %>
+                <li><%= link_to t(:user_title), "#", id: "word-header" %></li>
+                <li class="dropdown">
+                <%= link_to t(:account_title), "#", "data-toggle": "dropdown",
+                  class: "dropdown-toggle", id: "word-header" %>
+                <ul class="dropdown-menu">
+                  <li><%= link_to t(:profile_title), current_user %></li>
+                  <li><%= link_to t(:setting_title), "#" %></li>
+                  <li class="divider"></li>
+                  <li> <%= link_to t(:logout_title), logout_path,
+                    method: "delete" %></li>
+                </ul>
+              <% else %>
+                <li><%= link_to t(:login_title), login_path,
+                  id: "word-header" %></li>
+              <% end %>
+            </ul>
+          </nav>
+        </div>
+      </div>
     </div>
   </div>
 </header>
