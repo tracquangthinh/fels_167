@@ -1,4 +1,4 @@
 class Category < ActiveRecord::Base
-  has_many :lesson
-  has_many :word
+  has_many :lessons
+  has_many :words, dependent: :destroy
 end
