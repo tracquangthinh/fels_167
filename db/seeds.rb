@@ -21,6 +21,16 @@ User.create! name: "kieudang", email: "kieudang@gmail.com",
   20.times{
     content = Faker::Name.title
     category_id = Faker::Number.between 1, 20
-    Word.create! content: content, category_id: category_id
+    word = Word.create! content: content, category_id: category_id
+    answer_content = Faker::Name::title
+    is_correct = true
+    WordAnswer.create! content: answer_content, is_correct: is_correct,
+      word_id: word.id
+    3.times{
+      answer_content = Faker::Name::title
+      is_correct = false
+      WordAnswer.create! content: answer_content, is_correct: is_correct,
+        word_id: word.id
+    }
   }
 }
