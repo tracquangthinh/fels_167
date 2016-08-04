@@ -11,4 +11,11 @@ class ApplicationController < ActionController::Base
   def verify_admin
     redirect_to root_url unless current_user.is_admin?
   end
+
+  def authorize_user
+    unless @user.is_user? current_user
+      flash[:danger] = t :permission
+      redirect_to root_url
+    end
+  end
 end
