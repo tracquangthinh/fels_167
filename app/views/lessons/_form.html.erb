@@ -1,0 +1,26 @@
+<%= form_for [@category, @lesson] do |f| %>
+  <% @results.each_with_index do |result, index| %>
+    <div class="panel panel-primary panel-body">
+      <%= "#{index+1}:#{result.word.content}" %>
+      <%= f.fields_for result do |r| %>
+        <ul>
+          <% word_answers = result.word.word_answers %>
+          <% word_answers.each do |answer| %>
+            <li class="radioGroup">
+              <%= r.radio_button :id, answer.id, name: result.id %>
+              <span><%= answer.content %></span>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="my-margin-right">
+    <%= f.submit t(:finish), class: "btn btn-danger",
+      data: {confirm: t(:finish_sure)} %>
+  </div>
+  <div class="my-margin-right">
+    <%= f.submit t(:save), class: "btn btn-primary",
+      data: {confirm: t(:finish_sure)} %>
+  </div>
+<% end %>

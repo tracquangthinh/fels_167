@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#destroy"
   get "/signup", to: "users#new"
   post "/signup", to: "users#create"
+  get "/lessons/new", to: "lessons#create"
   root "static_pages#home"
+
   resources :users
   namespace :admin do
     resources :categories do
@@ -16,5 +18,9 @@ Rails.application.routes.draw do
   end
   resources :categories do
     resources :words
+    resources :lessons
   end
+  resources :results
+  resources :words
+  resources :lessons
 end
