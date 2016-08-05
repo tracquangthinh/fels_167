@@ -18,3 +18,5 @@ action_type:
 activity_time_format: "%H:%M:%S %d/%m/%Y"
 max_num_word_answer: 6
 min_num_word_answer: 4
+default_num_answer: 0
+check_finish: "Finish"

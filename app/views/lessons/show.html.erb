@@ -6,6 +6,12 @@
         <h2 class="center" id="word-header"><%= t :lesson %></h2>
       </div>
       <div class="panel-body center">
+        <p class="num_answers inline-display">
+          <%= "#{Settings.default_num_answer}" %>
+        </p>
+        <p class="inline-display">
+          <%= "/#{Settings.take_num_lesson}" %>
+        </p>
       </div>
     </div>
   </aside>

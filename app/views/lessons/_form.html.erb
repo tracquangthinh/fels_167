@@ -1,4 +1,5 @@
 <%= form_for [@category, @lesson] do |f| %>
+  <%= f.hidden_field :category_id, value: @category.id %>
   <% @results.each_with_index do |result, index| %>
     <div class="panel panel-primary panel-body">
       <%= "#{index+1}:#{result.word.content}" %>
