@@ -1,0 +1,16 @@
+<%= provide :title, current_user.name %>
+<div class="row">
+  <aside class="col-md-2 panel panel-default">
+    <%= link_to image_tag(current_user.avatar, class: "my-avatar-home"),
+      current_user %>
+    <h1 class="my-username"><%= link_to current_user.name, current_user %></h1>
+  </aside>
+  <aside class="col-md-1"></aside>
+  <aside class="col-md-8 panel panel-default center">
+    <h1> <%= t :user_all %></h1>
+    <ul class="users">
+      <%= render @users %>
+    </ul>
+    <%= will_paginate %>
+  </aside>
+</div>
