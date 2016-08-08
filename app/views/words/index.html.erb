@@ -1,0 +1,71 @@
+<% provide :title, t(:words_list_title) %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <%= t :search %>
+        </div>
+        <div class="panel-body">
+          <form>
+            <input id="searchWord" type="text">
+            <button type="submit" class="pull-right"><%= t :search %></button>
+          </form>
+          <div class="sortForm">
+            <%= t :sort_by %>
+            <div class="radio">
+              <label><input type="radio" name="radioSort" id="asc"
+                checked="true"><%= t :asc %></label>
+            </div>
+            <div class="radio">
+              <label><input type="radio" name="radioSort" id="desc">
+                <%= t :desc %></label>
+            </div>
+          </div>
+        </div>  
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <div class="row">
+            <div class="col-md-3">
+              <% unless @previous_category.nil? %>
+                <%= link_to category_words_path(@previous_category),
+                  class: "previous" do %>
+                  <i class="glyphicon glyphicon-chevron-left">
+                    <%= t :previous %>
+                  </i>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="col-md-7 text-center">
+              <%= @category.name %>
+            </div>
+            <div class="col-md-2 text-right">
+              <% unless @next_category.nil? %>
+                <%= link_to category_words_path(@next_category),
+                  class: "previous" do %>
+                  <%= t :next %><i class="glyphicon glyphicon-chevron-right"></i>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="numberlist">
+            <ol id="theList">
+              <% 4.times do |i| %>
+                <div class="col-md-3">
+                  <% @words[i].each do |word| %>
+                    <li><p><%= word.content %></p></li>
+                  <% end %>
+                </div>
+              <% end %>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
