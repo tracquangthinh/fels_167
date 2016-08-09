@@ -1,0 +1,47 @@
+<% provide :title, t(:words_title) %>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <div class="panel-title"><%= t :words_header %></div>
+  </div>
+  <div class="panel-body">
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th class="text-center"><%= t :id %></th>
+        <th class="text-center"><%= t :word %></th>
+        <th class="text-center"><%= t :word_answer %></th>
+        <th class="text-center"><%= t :category %></th>
+      </tr>
+
+      <% @words.each do |word| %>
+        <tr>
+          <td class="text-center"><%= word.id %></td>
+          <td class="text-center"><%= word.content %></td>
+          <td>
+            <ul>
+              <% word.word_answers.each do |word_answer| %>
+                <li <%= "class=correct_answer" if word_answer.is_correct %>>
+                  <%= word_answer.content %>
+                </li>
+              <% end %>
+            </ul>
+          </td>
+          <td class="text-center"><%= word.category.name %></td>
+          <td class="text-center">
+            <%= link_to [:admin, word], "data-toggle": "tooltip",
+              title: t(:edit) do %>
+              <i class="glyphicon glyphicon-pencil"></i>
+            <% end %>
+          </td>
+          <td class="text-center">
+            <%= link_to [:admin, word], method: :delete,
+              "data-toggle": "tooltip", title: t(:delete),
+              data: {confirm: t(:are_you_sure)} do %>
+              <i class="glyphicon glyphicon-trash"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <%= will_paginate %>
+  </div>
+</div>
