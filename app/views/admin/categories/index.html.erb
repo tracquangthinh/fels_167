@@ -1,29 +1,80 @@
 <% provide :title, t(:categories_title) %>
-<h3><%= t :categories_header %></h3>
-<table class="table table-bordered table-hover text-center">
-  <tr>
-    <th class="text-center"><%= t :name %></th>
-    <th class="text-center"><%= t :description %></th>
-    <th class="text-center"><%= t :number_of_words %></th>
-  </tr>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="panel-title pull-left"><%= t :categories_header %></div>
+    </div>
+    <div class="row row-menu">
+      <div class="col-md-3">
+        <%= link_to t(:nothing), "data-toggle": "modal",
+          "data-target": "#newCategoryModal", class: "previous link-create" do %>
+          <span class="glyphicon glyphicon-plus"></span>
+          <%= t :create_category %>
+        <% end %>
+      </div>
+      <div class="col-md-2 col-delete-multiple">
+        <%= form_tag destroy_multiple_admin_categories_path,
+          method: :delete, id: "formDeleteMultipleWord" do %>
+          <i class="glyphicon glyphicon-trash"></i>
+          <%= link_to t(:delete_multiple), "#",
+            id: "btnDeleteMultipleWord", class: "previous" %>
+       </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <table class="table table-bordered table-hover text-center"
+      id="tableCategoriesResult">
+      <tr id="tableHeading">
+        <th></th>
+        <th class="text-center"><%= t :id %></th>
+        <th class="text-center"><%= t :name %></th>
+        <th class="text-center"><%= t :description %></th>
+        <th class="text-center"><%= t :number_of_words %></th>
+      </tr>
 
-  <% @categories.each do |category| %>
-    <tr>
-      <td><%= category.name %></td>
-      <td><%= category.description %></td>
-      <td><%= category.words.count %></td>
-      <td>
-        <%= link_to [:admin, category] do %>
-          <i class="glyphicon glyphicon-pencil"><%= t :edit %></i>
-        <% end %>
-      </td>
-      <td>
-        <%= link_to [:admin, category], method: :delete,
-          data: {confirm: t(:are_you_sure)} do %>
-          <i class="glyphicon glyphicon-trash"><%= t :delete %></i>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+      <% @categories.each do |category| %>
+        <tr>
+          <td class="col-md-1"><%= check_box_tag "category_ids[]",
+            category.id, false %></td>
+          <td class="col-md-1"><%= category.id %></td>
+          <td class="col-md-2"><%= category.name %></td>
+          <td class="col-md-3"><%= category.description %></td>
+          <td class="col-md-5"><%= category.words.size %></td>
+          <td>
+            <%= link_to [:admin, category], "data-toggle": "tooltip",
+              title: t(:edit) do %>
+              <i class="glyphicon glyphicon-pencil"></i>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to [:admin, category], method: :delete,
+              "data-toggle": "tooltip", title: t(:edit),
+              data: {confirm: t(:are_you_sure)} do %>
+              <i class="glyphicon glyphicon-trash"></i>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+<% end %>
 <%= will_paginate %>
+<div class="modal fade" id="newCategoryModal" tabindex="-1" role="dialog"
+  aria-labelledby="newCategoryModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="newCategoryModalLabel">
+          <%= t :create_category %>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <%= render "create_form", modal: true %>
+      </div>
+    </div>
+  </div>
+</div>
