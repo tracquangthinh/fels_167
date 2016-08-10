@@ -17,6 +17,21 @@ class Admin::CategoriesController < ApplicationController
     end
   end
 
+  def destroy
+    ids = params[:category_ids].nil? ? params[:id] : params[:category_ids]
+    @categories = Category.find ids
+    if @categories.nil?
+      flash[:danger] = t :must_select
+    else
+      if Category.destroy @categories
+        flash[:success] = t :delete_success
+      else
+        flash[:danger] = t :not_delete
+      end
+    end
+    redirect_to admin_categories_path
+  end
+
   private
   def category_params
     params.require(:category).permit :name, :description
