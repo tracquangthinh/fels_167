@@ -50,3 +50,6 @@ en:
   name: "name"
   time: "time"
   not_exist_category: "Category does not exist, maybe it was deleted"
+  update_button: "Save changes"
+  profie_updated: "Profile updated"
+  permission: "You don't have permission"

@@ -19,4 +19,8 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: {minimum: 6}
   validates_attachment :avatar, content_type: {content_type: "image/.*"},
     size: {in: 0..100.kilobytes}
+
+  def is_user? user
+    self == user
+  end
 end
