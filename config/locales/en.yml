@@ -82,3 +82,8 @@ en:
   not_delete: "Something wrong happend. Please try again"
   delete_select: "Delete select"
   must_select: "Please select categories to delete or maybe it's been deleted"
+  create_word: "Create new word"
+  content: "Content"
+  answer: "Answer"
+  is_right: "Is right?"
+  add_word_input: "Add new word answer"

@@ -39,7 +39,7 @@ $(document).on 'ready page:load', ->
     e.preventDefault()
     action = $(this).attr('action')
     method = $(this).attr('method')
-    data = $(this).serializeArray();
+    data = $(this).serializeArray()
     $.ajax
       url: action
       method: method
@@ -50,11 +50,11 @@ $(document).on 'ready page:load', ->
         alert 'Create successful'
         $('#tableHeading').remove();
         $('#tableCategoriesResult').prepend(newCategory(result))
-        $('#tableCategoriesResult').prepend(headingTable)
+        $('#tableCategoriesResult').prepend(headingTableCategory)
       error: (result) ->
         alert 'Can\'t create category. Check information please'
   
-  headingTable = ->
+  headingTableCategory = ->
     res = '<tr id="tableHeading"><th></th>'
     res += '<th class="text-center">ID</th>'
     res += '<th class="text-center">Name</th>'
@@ -82,7 +82,90 @@ $(document).on 'ready page:load', ->
     res += '<i class="glyphicon glyphicon-trash"></i></a></td></tr>'
     res
 
+  $('#new_word').submit (e) ->
+    e.preventDefault()
+    action = $(this).attr('action')
+    method = $(this).attr('method')
+    data = $(this).serializeArray();
+    $.ajax
+      url: action
+      method: method
+      data: data
+      dataType: 'json'
+      success: (result) ->
+        $('#newWordModal').modal('toggle');
+        alert 'Create successful'
+        $('#tableHeading').remove();
+        $('#tableWordResult').prepend(newWord(result))
+        $('#tableWordResult').prepend(headingTableWord)
+      error: (result) ->
+        alert 'Can\'t create word. Please check information and try again'
+
+  headingTableWord = ->
+    res = '<tr id="tableHeading"><th></th>'
+    res += '<th class="text-center">ID</th>'
+    res += '<th class="text-center">Word</th>'
+    res += '<th class="text-center">Answer</th></tr>'
+    res
+
+  newWord = (result) ->
+    res = '<tr><td><input name="word_ids[]" id="word_ids_" value="' + result.id
+    res += '" type="checkbox"></td>'
+    res += '<td class="text-center">' + result.id + '</td>'
+    res += '<td class="text-center">' + result.content + '</td>'
+    res += '<td><ul>'
+    $.each result.answers, (index, value) ->
+      if index == result.answer_right
+        res += '<li class="correct_answer">' + value + '</li>'
+      else
+        res += '<li>' + value + '</li>'
+    res += '</ul></td>'
+    res += '<td class="text-center"><a data-toggle="tooltip" title="Edit" '
+    res += 'href="/admin/categories/'
+    res += result.category_id+ '/words/' + result.id + '">'
+    res += '<i class="glyphicon glyphicon-pencil"></i></a></td>'
+    res += '<td class="text-center"><a data-toggle="tooltip" title="Delete"'
+    res += 'data-confirm="Are you sure?" rel="nofollow" data-method="delete" '
+    res += 'href="/admin/categories/'
+    res += result.category_id+ '/words/' + result.id + '">'
+    res += '<i class="glyphicon glyphicon-trash"></i></a></td></tr>'
+    res
+
   $('#btnDeleteMultipleWord').click ->
     c = confirm('Are you sure?')
     if c
       $('#formDeleteMultipleWord').submit()
+  
+  sizeInputWord = 4
+  $('#btnAddWord').on 'click', (e) ->
+    e.preventDefault()
+    if sizeInputWord < 8
+      sizeInputWord++
+      $('#tableAddWord').append(newInputWord(sizeInputWord - 1))
+
+  $('#tableAddWord').on 'click', '.btnRemove', ->
+    if sizeInputWord > 2
+      sizeInputWord--
+      $(this).parents('tr').remove()
+      setValueRadio()
+
+  setValueRadio = ->
+    index = 0
+    $('input[name="is_correct"]').each ->
+      $(this).val(index)
+      index++
+
+  newInputWord = (id) ->
+    res = '<tr><td>'
+    res += '<input placeholder="Answer" class="form-control" '
+    res += 'name="word[word_answers_attributes][' + id + '][content]" '
+    res += 'id="word_word_answers_attributes_' + id + '_content" type="text">'
+    res += '</td><td>'
+    res += '<input name="is_correct" value="' + id + '" '
+    res += 'id="word_word_answers_attributes_' + id
+    res += '_is_correct_' + id + '" type="radio">'
+    res += '</td><td>'
+    res += '<a href="#" class="btnRemove">'
+    res += '<i class="glyphicon glyphicon-trash"></i>'
+    res += '</a></td></tr>'
+    res

@@ -10,8 +10,9 @@ Rails.application.routes.draw do
   root "static_pages#home"
   resources :users, only: [:new, :create, :show, :edit, :update]
   namespace :admin do
-    resources :categories
-    resources :words
+    resources :categories do
+      resources :words
+    end
   end
   resources :categories do
     resources :words

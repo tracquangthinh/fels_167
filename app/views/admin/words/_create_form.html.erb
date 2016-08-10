@@ -1,0 +1,35 @@
+<%= form_for [:admin, @category, @word] do |f| %>
+  <div class="form-group">
+    <%= f.text_field :content, placeholder: t(:content),
+      class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <table class="table table-bordered table-hover text-center" id="tableAddWord">
+      <tr>
+        <th><%= t :answer %></th>
+        <th><%= t :is_right %></th>
+      </tr>
+      <%= f.fields_for :word_answers do |builder| %>
+        <tr>
+          <td>
+            <%= builder.text_field :content, placeholder: t(:answer),
+              class: "form-control" %>
+          </td>
+          <td>
+            <%= builder.radio_button :is_correct,
+              builder.options[:child_index], name: "is_correct" %>
+          </td>
+          <td>
+            <a href="#" class="btnRemove">
+              <i class="glyphicon glyphicon-trash"></i>
+            </a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="form-group">
+    <%= f.submit t(:create_word), class: "btn btn-primary" %>
+    <button class="btn btn-primary" id="btnAddWord"><%= t :add_word_input %></button>
+  </div>
+<% end %>
