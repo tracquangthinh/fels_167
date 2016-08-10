@@ -16,12 +16,14 @@
       <% end %>
     </div>
   <% end %>
-  <div class="my-margin-right">
-    <%= f.submit t(:finish), class: "btn btn-danger",
-      data: {confirm: t(:finish_sure)} %>
-  </div>
-  <div class="my-margin-right">
-    <%= f.submit t(:save), class: "btn btn-primary",
-      data: {confirm: t(:finish_sure)} %>
-  </div>
+  <% unless @lesson.is_completed %>
+    <div class="my-margin-right">
+      <%= f.submit t(:finish), class: "btn btn-danger",
+        data: {confirm: t(:finish_sure)} %>
+    </div>
+    <div class="my-margin-right">
+      <%= f.submit t(:save), class: "btn btn-primary",
+        data: {confirm: t(:finish_sure)} %>
+    </div>
+  <% end %>
 <% end %>

@@ -1,0 +1,46 @@
+<%= provide :title, t(:lesson) %>
+<div class="row">
+  <aside class="col-md-2">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2 class="center" id="word-header"><%= t :score %></h2>
+      </div>
+      <div class="panel-body center">
+        <%= @results.select{|x| x.is_correct}.size() %>
+        <%= "/ #{Settings.take_num_lesson}"%>
+        <br>
+        <button type="button" class="btn btn-warning">
+          <%= link_to t(:category), categories_path, id: "word-header" %>
+        </button>
+      </div>
+    </div>
+  </aside>
+  <aside class="col-md-1"></aside>
+  <aside class="col-md-8">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h2 class="center" id="word-header"><%= t :test %></h2>
+      </div>
+      <div class="panel-body">
+          <% @words.each_with_index do |word, index| %>
+            <div class="panel panel-primary panel-body">
+              <%= "#{index+1}: #{word.content}" %>
+              <ul>
+                <% word_answers = word.word_answers %>
+                <% result = @results.select{|x| x.word_id == word.id} %>
+                <% word_answers.each do |answer| %>
+                  <li>
+                    <% color = color_for result.first, answer %>
+                    <span style="color: <%= color%>">
+                      <%= answer.content %>
+                    </span>
+                  </li>
+                <% end %>
+                <span style="color: red"><%= check_answer result.first %></span>
+              </ul>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </aside>
+</div>

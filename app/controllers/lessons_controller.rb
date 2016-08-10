@@ -51,7 +51,7 @@ class LessonsController < ApplicationController
         @lesson.update is_completed: true,
           results_attributes: results_attributes(@lesson)
         flash[:success] = t :lesson
-        redirect_to root_path
+        redirect_to result_path(@lesson.id)
       end
     else
       redirect_to category_lessons_path category_id: @category.id
@@ -75,7 +75,7 @@ class LessonsController < ApplicationController
     results = lesson.results
     attribute = []
     results.each do |r|
-      value = {id: r.id, word_answer_id: params[r.id].to_i}
+      value = {id: r.id, word_answer_id: params[r.id.to_s].to_i}
       attribute.push value
     end
     return attribute
