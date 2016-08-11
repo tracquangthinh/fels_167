@@ -1,7 +1,8 @@
 class Admin::WordsController < ApplicationController
   include Admin::WordsHelper
   include WordsHelper
-  before_action :load_category, only: [:index, :create]
+  before_action :verify_admin
+  before_action :load_category, only: [:index, :create, :destroy]
 
   def index
     @words = @category.words.order(created_at: :desc).paginate page: 
@@ -12,7 +13,6 @@ class Admin::WordsController < ApplicationController
   end
 
   def create
-
     @word = @category.words.build word_params
     unless correct_answer.nil?
       @word.word_answers[correct_answer].is_correct = true
@@ -24,13 +24,20 @@ class Admin::WordsController < ApplicationController
       end
     end
   end
-
-  private
-  def word_params
-    params.require(:word).permit :content,
-      word_answers_attributes: [:content, :is_correct]
+  
+  def destroy
+    @word = @category.words.find_by id: params[:id]
+    unless @word.results.any?
+      if @word.destroy
+        flash[:success] = t :delete_success
+      else
+        flash[:danger] = t :not_delete
+      end
+    end
+    redirect_to admin_category_words_path(@category)
   end
 
+  private
   def load_category
     @category = Category.find_by id: params[:category_id]
     if @category.nil?
@@ -41,5 +48,10 @@ class Admin::WordsController < ApplicationController
 
   def correct_answer
     params.require(:is_correct).to_i
+  end
+
+  def word_params
+    params.require(:word).permit :content,
+      word_answers_attributes: [:content, :is_correct]
   end
 end

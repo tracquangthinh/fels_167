@@ -3,7 +3,7 @@ class Word < ActiveRecord::Base
   has_many :word_answers, dependent: :destroy
   accepts_nested_attributes_for :word_answers, allow_destroy: true,
     reject_if: proc{|attributes| attributes["content"].blank?}
-  has_many :results
+  has_many :results, dependent: :destroy
   validates :content, presence: true, length: {maximum: 45}
   after_initialize :build_word_answers
 
