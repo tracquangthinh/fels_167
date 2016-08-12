@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   skip_before_action :logged_in_user, only: [:new, :create]
-  before_action :load_user, only: [:show, :edit, :update]
+  before_action :load_user, only: [:show, :edit, :update, :destroy]
   before_action :authorize_user, only: [:edit, :update]
+  before_action :verify_admin, only: [:destroy]
 
   def new
     @user = User.new
@@ -34,6 +35,15 @@ class UsersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    if @user.destroy
+      flash[:success] = t :delete_successful
+    else
+      flash[:danger] = t :delete_fail
+    end
+    redirect_to users_path
   end
 
   private

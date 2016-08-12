@@ -87,3 +87,5 @@ en:
   answer: "Answer"
   is_right: "Is right?"
   add_word_input: "Add new word answer"
+  delete_successful: "Delete successful"
+  delete_fail: "Delete failed. Something wrong happend"
