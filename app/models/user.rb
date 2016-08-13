@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :activity
+  has_many :activities
   has_many :lesson
   has_many :active_relationships, class_name: Relationship.name,
     foreign_key: "follower_id", dependent: :destroy

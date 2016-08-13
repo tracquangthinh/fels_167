@@ -2,3 +2,17 @@ per_page: 5
 words_list_column: 4
 take_num_lesson: 10
 default_size_word_answers: 4
+action_type:
+  follow: 1
+  unfollow: 2
+  followed: 3
+  unfollowed: 4
+  learn: 5
+  login: 6
+  create_a_category: 7
+  destroy_a_category: 8
+  edit_a_category: 9
+  create_a_word: 10
+  destroy_a_word: 11
+  edit_a_word: 12
+activity_time_format: "%H:%M:%S %d/%m/%Y"
