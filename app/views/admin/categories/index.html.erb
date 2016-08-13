@@ -20,6 +20,14 @@
           <%= link_to t(:delete_multiple), "#",
             id: "btnDeleteMultipleWord", class: "previous" %>
        </div>
+       <div class="col-md-3">
+        <%= link_to "", "data-toggle": "modal",
+          "data-target": "#importCategoriesModal",
+          class: "previous link-create" do %>
+          <span class="glyphicon glyphicon-plus"></span>
+          <%= t :import_categories %>
+        <% end %> 
+       </div>
     </div>
   </div>
   <div class="panel-body">
@@ -101,3 +109,25 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="importCategoriesModal" tabindex="-1" role="dialog"
+  aria-labelledby="importCategoriesModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="importCategoriesModalLabel">
+          <%= t :import_categories %>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag import_admin_categories_path, multipart: true do %>
+          <%= file_field_tag :file %>
+          <%= submit_tag t :import, class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+

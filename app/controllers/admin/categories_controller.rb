@@ -43,6 +43,16 @@ class Admin::CategoriesController < ApplicationController
     end
   end
 
+  def import
+    begin
+      Category.import params[:file]
+      flash[:success] = t :import_success
+    rescue
+      flash[:danger] = t :import_fail
+    end  
+    redirect_to admin_categories_path
+  end
+
   private
   def category_params
     params.require(:category).permit :name, :description

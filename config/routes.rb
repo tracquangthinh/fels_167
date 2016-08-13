@@ -18,9 +18,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :categories do
       resources :words
+      collection { post :import }
     end
-  end
-  resources :categories do
     resources :words
     resources :lessons
   end

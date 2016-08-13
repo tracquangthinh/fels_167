@@ -117,3 +117,8 @@ en:
   unfollow: "Unfollow"
   user_all: "User All"
   history_title: "History"
+  import_categories: "Import categories from file"
+  uknown_file: "Unknown file type:"
+  import_success: "Imported success"
+  import_fail: "Can't import from file. Please check information and try again"
+  import: "Import"

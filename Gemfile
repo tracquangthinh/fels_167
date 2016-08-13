@@ -47,6 +47,9 @@ gem "will_paginate", "3.1.0"
 gem "bootstrap-will_paginate", "0.0.10"
 # Save setting
 gem "config"
+# Import xls
+gem "roo"
+gem "iconv"
 
 group :development, :test do
   # Call "byebug" anywhere in the code to stop execution and get a debugger console
