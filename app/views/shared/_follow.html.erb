@@ -1,0 +1,24 @@
+<% @user = current_user if @user.nil? %>
+  <div class="profile-follow" >
+    <li class="nav">
+      <h3>
+        <%= link_to t(:following), following_user_path %>
+      </h3>
+      <h3 class="badge right"><%= @user.following.count %></h3>
+    </li>
+    <li class="nav">
+      <h3>
+        <%= link_to t(:follower), followers_user_path %>
+      </h3>
+      <h3 class="badge right" id="js_follower"><%= @user.followers.count %></h3>
+    </li>
+  </div>
+<div id="js_follow_form">
+  <% unless @user==current_user %>
+    <% if current_user.check_following @user %>
+      <%= render "shared/unfollow_form" %>
+    <% else %>
+      <%= render "shared/follow_form" %>
+    <% end %>
+  <% end %>
+</div>

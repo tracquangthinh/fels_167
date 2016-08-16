@@ -37,6 +37,11 @@ h2{
   font-weight: normal;
   color: #777;
 }
+h3{
+  font-size: 1em;
+  float: left;
+  marigin-bottom: none;
+}
 p{
   font-size: 1.1em;
   line-height: 1.7em;
@@ -426,4 +431,17 @@ span.picture {
 }
 .limit-height{
   height: 100px;
+}
+.border-top-style{
+  border-top-style: inset;
+  border-top-width: 2px;
+}
+.right{
+  float: right;
+}
+.profile-follow{
+  list-style: none;
+  border-bottom-style: inset;
+  font-size: 14px;
+  padding-left: 0px
 }

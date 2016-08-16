@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :logged_in_user, only: [:new, :create]
-  before_action :load_user, only: [:show, :edit, :update, :destroy]
+  before_action :load_user, except: [:new, :create, :index]
   before_action :authorize_user, only: [:edit, :update]
   before_action :verify_admin, only: [:destroy]
 
@@ -17,14 +17,16 @@ class UsersController < ApplicationController
       render :new
     end
   end
-  
+
   def show
     @activities = @user.activities.order(created_at: :desc)
       .paginate page: params[:page]
+    @type_title = Settings.profile_title.history
   end
 
   def index
     @users = User.paginate page: params[:page]
+    @type_title = Settings.profile_title.user_all
   end
 
   def edit
@@ -46,6 +48,20 @@ class UsersController < ApplicationController
       flash[:danger] = t :delete_fail
     end
     redirect_to users_path
+  end
+
+  def following
+    @users = @user.following.paginate page: params[:page],
+      per_page: Settings.per_page
+    @type_title = Settings.profile_title.following
+    render :show_follow
+  end
+
+  def followers
+    @users = @user.followers.paginate page: params[:page],
+      per_page: Settings.per_page
+    @type_title = Settings.profile_title.follower
+    render :show_follow
   end
 
   private
