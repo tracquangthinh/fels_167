@@ -171,7 +171,6 @@ aside{
 /*input*/
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
-  width: 100%;
   margin-bottom: 15px;
   @include box_sizing;
 }
@@ -344,7 +343,6 @@ span.picture {
 .affix + .container-fluid {
   padding-top: 70px;
 }
-
 /* user_words_list */
 .numberlist ol{
   counter-reset: li;
@@ -356,7 +354,7 @@ span.picture {
 }
 .numberlist ol ol{
   margin: 0 0 0 2em;
-}      
+}
 .numberlist p{
   position: relative;
   display: block;
@@ -377,7 +375,7 @@ span.picture {
 .numberlist p:before{
   content: counter(li);
   counter-increment: li;
-  position: absolute; 
+  position: absolute;
   left: -1.3em;
   top: 50%;
   margin-top: -1.3em;
@@ -401,4 +399,7 @@ span.picture {
 }
 .sortForm{
   margin-top: 30px;
+}
+.btn-width-lesson{
+  width: 200px;
 }
