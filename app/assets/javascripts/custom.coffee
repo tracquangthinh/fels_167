@@ -81,3 +81,8 @@ $(document).on 'ready page:load', ->
     res += result.id + '">'
     res += '<i class="glyphicon glyphicon-trash"></i></a></td></tr>'
     res
+
+  $('#btnDeleteMultipleWord').click ->
+    c = confirm('Are you sure?')
+    if c
+      $('#formDeleteMultipleWord').submit()

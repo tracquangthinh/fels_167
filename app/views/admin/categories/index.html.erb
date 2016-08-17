@@ -2,7 +2,8 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
     <div class="row">
-      <div class="panel-title pull-left"><%= t :categories_header %></div>
+      <div class="panel-title pull-left category-header">
+        <%= t :categories_header %></div>
     </div>
     <div class="row row-menu">
       <div class="col-md-3">
@@ -13,7 +14,7 @@
         <% end %>
       </div>
       <div class="col-md-2 col-delete-multiple">
-        <%= form_tag destroy_multiple_admin_categories_path,
+        <%= form_tag admin_category_path(0),
           method: :delete, id: "formDeleteMultipleWord" do %>
           <i class="glyphicon glyphicon-trash"></i>
           <%= link_to t(:delete_multiple), "#",
@@ -49,7 +50,8 @@
           <td>
             <%= link_to [:admin, category], method: :delete,
               "data-toggle": "tooltip", title: t(:edit),
-              data: {confirm: t(:are_you_sure)} do %>
+              data: {confirm: t(:are_you_sure)}, name: "category_ids[]",
+              value: category.id do %>
               <i class="glyphicon glyphicon-trash"></i>
             <% end %>
           </td>
