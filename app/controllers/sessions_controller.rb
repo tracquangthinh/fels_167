@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_before_action :logged_in_user
+
   def new
     redirect_to home_path if logged_in?
   end

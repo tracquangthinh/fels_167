@@ -13,5 +13,7 @@ Rails.application.routes.draw do
     resources :categories
     resources :words
   end
-  resources :categories
+  resources :categories do
+    resources :words
+  end
 end
