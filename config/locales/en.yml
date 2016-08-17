@@ -75,3 +75,6 @@ en:
   lessons_title: "List lessons"
   number_lesson: "Number of lessons"
   info_delete: "Information was deleted"
+  create_category: "Create a category"
+  nothing: ""
+  delete_multiple: "Delete selected"

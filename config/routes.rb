@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   root "static_pages#home"
   resources :users, only: [:new, :create, :show, :edit, :update]
   namespace :admin do
-    resources :categories
+    resources :categories do
+      collection do
+          delete "destroy_multiple"
+      end
+    end
     resources :words
   end
   resources :categories do
