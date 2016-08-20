@@ -19,17 +19,28 @@ class Admin::CategoriesController < ApplicationController
 
   def destroy
     ids = params[:category_ids].nil? ? params[:id] : params[:category_ids]
-    @categories = Category.find ids
-    if @categories.nil?
-      flash[:danger] = t :must_select
-    else
-      if Category.destroy @categories
-        flash[:success] = t :delete_success
-      else
-        flash[:danger] = t :not_delete
+    @categories = Category.find_ids ids
+    index_delete_success = []
+    if @categories
+      @categories.each do |category|
+        if Category.destroy category
+          index_delete_success.append(category.id)
+        end
       end
+      flash[:success] = t(:delete_success) + index_delete_success.join(",")
+    else
+      flash[:danger] = t :must_select
     end
     redirect_to admin_categories_path
+  end
+
+  def update
+    @category = Category.find_by id: params[:id]
+    respond_to do |format|
+      if @category && @category.update_attributes(category_params)
+        format.json {render json: to_json(@category)}
+      end
+    end
   end
 
   private

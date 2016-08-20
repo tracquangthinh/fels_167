@@ -5,4 +5,16 @@ class Category < ActiveRecord::Base
   scope :next, ->(id) {where("id > ?", id).first}
   validates :name, presence: true, length: {maximum: 45}, uniqueness: true
   validates :description, presence: true, length: {maximum: 255}
+
+  class << self
+    def find_ids ids
+      begin
+        @categories = self.find ids
+      rescue ActiveRecord::RecordNotFound
+        return nil
+      else
+        return @categories
+      end
+    end
+  end
 end
