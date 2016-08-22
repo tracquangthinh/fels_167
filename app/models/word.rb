@@ -7,6 +7,18 @@ class Word < ActiveRecord::Base
   validates :content, presence: true, length: {maximum: 45}
   after_initialize :build_word_answers
 
+  class << self
+    def find_ids ids
+      begin
+        @words = self.find ids
+      rescue ActiveRecord::RecordNotFound
+        return nil
+      else
+        return @words
+      end
+    end
+  end
+
   private
   def build_word_answers
     if self.new_record? && self.word_answers.size == 0

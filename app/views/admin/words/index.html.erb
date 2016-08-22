@@ -47,20 +47,20 @@
     <table class="table table-bordered table-hover" id="tableWordResult">
       <tr id="tableHeading">
         <th></th>
-        <th class="text-center"><%= t :id %></th>
         <th class="text-center"><%= t :word %></th>
         <th class="text-center"><%= t :word_answer %></th>
       </tr>
 
       <% @words.each do |word| %>
-        <tr>
+        <tr id="<%= word.id %>">
           <td><%= check_box_tag "word_ids[]", word.id, false %></td>
-          <td class="text-center"><%= word.id %></td>
-          <td class="text-center"><%= word.content %></td>
-          <td>
+          <%= hidden_field_tag "id", word.id %>
+          <td class="text-center" id="content"><%= word.content %></td>
+          <td id="answers">
             <ul>
-              <% word.word_answers.each do |word_answer| %>
-                <li <%= "class=correct_answer" if word_answer.is_correct %>>
+              <% word.word_answers.each_with_index do |word_answer, id| %>
+                <li <%= "class=correct_answer value=#{id}" if word_answer
+                  .is_correct %>>
                   <%= word_answer.content %>
                 </li>
               <% end %>
@@ -68,7 +68,8 @@
           </td>
           <td class="text-center">
             <%= link_to [:admin, @category, word], "data-toggle": "tooltip",
-              title: t(:edit) do %>
+              title: t(:edit), "data-toggle": "modal", "data-target":
+             "#editWordModal", "data-id": word.id do %>
               <i class="glyphicon glyphicon-pencil"></i>
             <% end %>
           </td>
@@ -99,7 +100,26 @@
         </h4>
       </div>
       <div class="modal-body">
-        <%= render "create_form", modal: true %>
+        <%= render "create_form", buttonLabel: t(:create_word), modal: true %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="editWordModal" tabindex="-1" role="dialog"
+  aria-labelledby="editWordModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="editWordModalLabel">
+          <%= t :edit_word %>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <%= render "create_form", buttonLabel: t(:update_button),
+          modal: true %>
       </div>
     </div>
   </div>

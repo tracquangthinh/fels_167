@@ -2,7 +2,7 @@ class Admin::WordsController < ApplicationController
   include Admin::WordsHelper
   include WordsHelper
   before_action :verify_admin
-  before_action :load_category, only: [:index, :create, :destroy]
+  before_action :load_category, only: [:index, :create, :destroy, :update]
 
   def index
     @words = @category.words.order(created_at: :desc).paginate page: 
@@ -26,15 +26,39 @@ class Admin::WordsController < ApplicationController
   end
   
   def destroy
-    @word = @category.words.find_by id: params[:id]
-    unless @word.results.any?
-      if @word.destroy
-        flash[:success] = t :delete_success
+    if params[:word_ids].nil?
+      if @category.words.destroy params[:id]
+        flash[:success] = t(:delete_success)
       else
-        flash[:danger] = t :not_delete
+        flash[:danger] = t(:delete_fail)
+      end
+    else
+      @words = @category.words.find_ids params[:word_ids]
+      index_delete_success = []
+      if @words
+        @words.each do |word|
+          if @category.words.destroy word
+            index_delete_success.append(word.id)
+          end
+        end
+        flash[:success] = t(:delete_success) + index_delete_success.join(",")
+      else
+        flash[:danger] = t :must_select
       end
     end
     redirect_to admin_category_words_path(@category)
+  end
+
+  def update
+    @word = @category.words.find_by id: params[:id]
+    respond_to do |format|
+      unless correct_answer.nil?
+        @word.word_answers.destroy_all
+        if @word.update_attributes word_params
+          format.json {render json: to_json(@word, correct_answer)}
+        end
+      end
+    end
   end
 
   private
@@ -51,7 +75,10 @@ class Admin::WordsController < ApplicationController
   end
 
   def word_params
-    params.require(:word).permit :content,
+    @word_params = params.require(:word).permit :content,
       word_answers_attributes: [:content, :is_correct]
+    @word_params[:word_answers_attributes][:"#{correct_answer}"][:is_correct] =
+      true
+    return @word_params
   end
 end
