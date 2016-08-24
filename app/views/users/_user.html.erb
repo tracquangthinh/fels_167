@@ -1,4 +1,14 @@
 <li>
   <%= link_to avatar_for(user), user %>
   <%= link_to user.name, user %>
+  <% if current_user.is_admin? %>
+    <% unless current_user? user %>
+      <div class="pull-right">
+        <%= link_to user, method: :delete, "data-toggle": "tooltip",
+          title: t(:delete), data: {confirm: t(:are_you_sure)} do %>
+          <i class="glyphicon glyphicon-trash"></i>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
 </li>
