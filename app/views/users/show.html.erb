@@ -1,6 +1,6 @@
 <% provide :title, @user.name %>
 <div class="row">
-  <aside class="col-md-2">
+  <aside class="col-md-4">
     <div class="panel panel-primary center">
       <div class="panel-heading"><h1><%= t :profile_title %></h1></div>
       <div class="panel-body">
@@ -9,14 +9,26 @@
       </div>
     </div>
   </aside>
-  <aside class="col-md-1"></aside>
-  <aside class="col-md-8">
+  <aside class="col-md-7 col-md-offset-1">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h1 class="center"><%= t :history %></h1>
       </div>
       <div class="panel-body">
+        <table class="table">
+          <% @activities.each do |activity| %>
+            <tr>
+              <td>
+                <b><%= @user.name %></b> 
+                <%= link_to activity.content, activity.link %>
+                <%= "#{t :at} #{activity.created_at.
+                  strftime(Settings.activity_time_format)}" %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
       </div>
     </div>
   </aside>
 </div>
+<%= will_paginate @activities %>

@@ -19,6 +19,8 @@ class UsersController < ApplicationController
   end
   
   def show
+    @activities = @user.activities.order(created_at: :desc)
+      .paginate page: params[:page]
   end
 
   def index
