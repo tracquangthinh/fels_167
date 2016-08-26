@@ -96,3 +96,6 @@ en:
   lesson_invalid: "Lesson was deleted or removed"
   not_enough_word: "Word isn't enough for one lesson"
   problem_create_lesson: "Occur an accident when create lesson"
+  lesson_id: "Lesson id: "
+  created_at: "Created at"
+  do: "Do lesson"
