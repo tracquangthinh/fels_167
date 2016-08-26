@@ -16,3 +16,5 @@ action_type:
   destroy_a_word: 11
   edit_a_word: 12
 activity_time_format: "%H:%M:%S %d/%m/%Y"
+max_num_word_answer: 6
+min_num_word_answer: 4

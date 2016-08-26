@@ -5,6 +5,8 @@ class CategoriesController < ApplicationController
     else
       if params[:categories][:sort] == t(:time)
         @categories = Category.order(:created_at).paginate page: params[:page]
+      else
+        @categories = Category.order(:name).paginate page: params[:page]
       end
     end
   end
@@ -18,5 +20,6 @@ class CategoriesController < ApplicationController
       flash[:danger] = t :not_exist_category
       redirect_to categories_path
     end
+    @lesson = Lesson.new
   end
 end
