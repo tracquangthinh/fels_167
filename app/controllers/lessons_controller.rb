@@ -1,5 +1,5 @@
 class LessonsController < ApplicationController
-  before_action :load_category, except: [:show]
+  before_action :load_category, except: [:show, :index]
 
   def create
     check_finish = false
@@ -26,6 +26,20 @@ class LessonsController < ApplicationController
     if @lesson.nil?
       flash[:danger] = t :lesson_invalid
       redirect_to root_path
+    end
+  end
+
+  def index
+    @category = Category.find_by id: params[:category_id]
+    if @category.nil?
+      flash[:danger] = t :not_exist_category
+      redirect_to root_path
+    else
+      @total_lessons = current_user.lesson.select{
+        |x| x.category_id == @category.id}
+      @num_lesson = @total_lessons.size()
+      @lessons = @total_lessons.paginate page: params[:page],
+        per_page: Settings.per_page
     end
   end
 

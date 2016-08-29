@@ -1,0 +1,23 @@
+<li>
+  <div>
+    <div style="display: inline"><%= t :lesson_id %>
+      <%= link_to lesson.id, lesson %>
+    </div>
+    <div class="my-margin-right" style="display: inline">
+      <%= t :created_at %>
+      <%= lesson.created_at.to_time.strftime Settings.activity_time_format %>
+    </div>
+  </div>
+  <div>
+    <% if lesson.is_completed %>
+      <%= "#{t :score} #{lesson.result.select{|x| x.is_correct}.size()}" %>
+      <button type="button" class="btn btn-primary my-margin-right">
+        <%= link_to t(:see_result), "#", id: "word-header" %>
+      </button>
+    <% else %>
+      <button type="button" class="btn btn-warning my-margin-right">
+        <%= link_to t(:do), "#", id: "word-header" %>
+      </button>
+    <% end %>
+  </div>
+</li>
