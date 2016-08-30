@@ -99,3 +99,6 @@ en:
   lesson_id: "Lesson id: "
   created_at: "Created at"
   do: "Do lesson"
+  completed: "Completed at: "
+  uncompleted: "Uncompleted at: "
+  start_at: "Start_at: "

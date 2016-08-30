@@ -23,7 +23,7 @@ $(document).on 'ready page:load', ->
     while i < list.length
       list[i].innerHTML = '<p>' + values[i] + '</p>'
       i++
-  
+
   desc = true
   $('#desc').click ->
     if desc
@@ -53,7 +53,7 @@ $(document).on 'ready page:load', ->
         $('#tableCategoriesResult').prepend(headingTableCategory)
       error: (result) ->
         alert 'Can\'t create category. Check information please'
-  
+
   headingTableCategory = ->
     res = '<tr id="tableHeading"><th></th>'
     res += '<th class="text-center">ID</th>'
@@ -135,7 +135,7 @@ $(document).on 'ready page:load', ->
     c = confirm('Are you sure?')
     if c
       $('#formDeleteMultipleWord').submit()
-  
+
   sizeInputWord = 4
   $('#btnAddWord').on 'click', (e) ->
     e.preventDefault()
@@ -169,3 +169,6 @@ $(document).on 'ready page:load', ->
     res += '<i class="glyphicon glyphicon-trash"></i>'
     res += '</a></td></tr>'
     res
+
+  $('.radioGroup').click ->
+    $('.num_answers').text $('li :checked').size()

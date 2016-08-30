@@ -22,6 +22,7 @@ class LessonsController < ApplicationController
 
   def show
     @lesson = Lesson.find_by id: params[:id]
+    @category = @lesson.category
     @results = @lesson.results
     if @lesson.nil?
       flash[:danger] = t :lesson_invalid
@@ -43,6 +44,20 @@ class LessonsController < ApplicationController
     end
   end
 
+  def update
+    if params[:commit] == Settings.check_finish
+      @lesson = Lesson.find_by id: params[:id]
+      unless @lesson.nil?
+        @lesson.update is_completed: true,
+          results_attributes: results_attributes(@lesson)
+        flash[:success] = t :lesson
+        redirect_to root_path
+      end
+    else
+      redirect_to category_lessons_path category_id: @category.id
+    end
+  end
+
   private
   def load_category
     @category = Category.find_by id: lesson_params[:category_id]
@@ -54,5 +69,15 @@ class LessonsController < ApplicationController
 
   def lesson_params
     params.require(:lesson).permit :category_id, :is_completed, :user_id
+  end
+
+  def results_attributes lesson
+    results = lesson.results
+    attribute = []
+    results.each do |r|
+      value = {id: r.id, word_answer_id: params[r.id].to_i}
+      attribute.push value
+    end
+    return attribute
   end
 end
