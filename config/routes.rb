@@ -20,7 +20,10 @@ Rails.application.routes.draw do
     resources :words
     resources :lessons
   end
-  resources :results
   resources :words
   resources :lessons
+  resources :categories do
+    resources :results, only: [:show, :index]
+  end
+  resources :results, only: [:show, :index]
 end
