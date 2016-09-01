@@ -20,20 +20,13 @@
         <h1 class="center"><%= @type_title %></h1>
       </div>
       <div class="panel-body">
-        <table class="table">
-          <% @activities.each do |activity| %>
-            <tr>
-              <td>
-                <b><%= @user.name %></b>
-                <%= link_to activity.content, activity.link %>
-                <%= "#{t :at} #{activity.created_at.
-                  strftime(Settings.activity_time_format)}" %>
-              </td>
-            </tr>
-          <% end %>
-        </table>
+        <% unless @users.nil? %>
+          <ul class="users">
+            <%= render @users %>
+          </ul>
+          <div class="center"><%= will_paginate %></div>
+        <% end %>
       </div>
     </div>
   </aside>
 </div>
-<%= will_paginate @activities %>

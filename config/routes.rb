@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   get "/lessons/new", to: "lessons#create"
   root "static_pages#home"
 
-  resources :users
+  resources :users, only: [:new, :create, :show, :edit, :update, :index] do
+    member do
+      get :following, :followers
+    end
+  end
   namespace :admin do
     resources :categories do
       resources :words
@@ -26,4 +30,5 @@ Rails.application.routes.draw do
     resources :results, only: [:show, :index]
   end
   resources :results, only: [:show, :index]
+  resources :relationships, only: [:create, :destroy]
 end
