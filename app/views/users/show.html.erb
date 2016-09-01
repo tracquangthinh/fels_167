@@ -4,10 +4,13 @@
     <div class="panel panel-primary center">
       <div class="panel-heading"><h1><%= t :profile_title %></h1></div>
       <div class="panel-body">
-        <div>
-          <%= link_to avatar_for(@user), @user %>
-          <h1 class="my-username"><%= link_to @user.name, @user %></h1>
-        </div>
+        <%= link_to avatar_for(current_user), current_user %>
+        <h1 class="my-username"><%= link_to @user.name, @user %></h1>
+        <% if current_user.is_user? @user%>
+          <button type="button" class="btn btn-warning">
+            <%= link_to t(:result_all), results_path, id: "word-header" %>
+          </button>
+        <% end %>
         <div class="border-top-style">
           <%= render "shared/follow"%>
         </div>
@@ -32,8 +35,8 @@
             </tr>
           <% end %>
         </table>
+        <div class="center"><%= will_paginate @activities %></div>
       </div>
     </div>
   </aside>
 </div>
-<%= will_paginate @activities %>
