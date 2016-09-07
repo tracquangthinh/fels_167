@@ -181,3 +181,31 @@ $(document).on 'ready page:load', ->
       $('#item-headerr').children('img').attr('src')
     $('#item-headerr').children('img').attr 'src', tmp
     return), 5000
+
+  id = 0
+  $('#editCategoryModal').on 'show.bs.modal', (e) ->
+    button = $(e.relatedTarget)
+    id = button.data('id')
+    name = $('#' + id).find('td[id="name"]').html()
+    description = $('#' + id).find('td[id="description"]').html().trim()
+    $('#editCategoryModal').find('input[id="category_name"]').val name
+    $('#editCategoryModal').find('input[id="category_description"]')
+      .val description
+
+  $('#editCategoryModal').find('form').submit (e) ->
+    e.preventDefault()
+    action = $(this).attr('action') + '/' + id
+    method = 'PUT'
+    data = $(this).serializeArray()
+    $.ajax
+      url: action
+      method: method
+      data: data
+      dataType: 'json'
+      success: (result) ->
+        $('#editCategoryModal').modal('toggle')
+        alert 'Update successful'
+        $('#' + result.id).find('td[id="name"]').html(result.name)
+        $('#' + result.id).find('td[id="description"]').html(result.description)
+      error: (result) ->
+        alert 'Can\'t update category. Check information please'

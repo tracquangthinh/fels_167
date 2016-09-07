@@ -27,23 +27,25 @@
       id="tableCategoriesResult">
       <tr id="tableHeading">
         <th></th>
-        <th class="text-center"><%= t :id %></th>
         <th class="text-center"><%= t :name %></th>
         <th class="text-center"><%= t :description %></th>
         <th class="text-center"><%= t :number_of_words %></th>
       </tr>
 
       <% @categories.each do |category| %>
-        <tr>
+        <tr id="<%= category.id %>">
           <td class="col-md-1"><%= check_box_tag "category_ids[]",
             category.id, false %></td>
-          <td class="col-md-1"><%= category.id %></td>
-          <td class="col-md-2"><%= category.name %></td>
-          <td class="col-md-3"><%= category.description %></td>
+          <%= hidden_field_tag "id", category.id %>
+          <td class="col-md-2" id="name"><%= category.name %></td>
+          <td class="col-md-3" id="description">
+            <%= category.description %>
+          </td>
           <td class="col-md-5"><%= category.words.size %></td>
           <td>
             <%= link_to [:admin, category], "data-toggle": "tooltip",
-              title: t(:edit) do %>
+              title: t(:edit), "data-toggle": "modal", "data-target":
+              "#editCategoryModal", "data-id": category.id do %>
               <i class="glyphicon glyphicon-pencil"></i>
             <% end %>
           </td>
@@ -75,7 +77,26 @@
         </h4>
       </div>
       <div class="modal-body">
-        <%= render "create_form", modal: true %>
+        <%= render "create_form", buttonLabel:
+          t(:create_category),  modal: true %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog"
+  aria-labelledby="editCategoryModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="editCategoryModalLabel">
+          <%= t :edit_category %>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <%= render "create_form", buttonLabel: t(:update_button), modal: true %>
       </div>
     </div>
   </div>
