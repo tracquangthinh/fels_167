@@ -29,7 +29,9 @@
     </table>
   </div>
   <div class="form-group">
-    <%= f.submit t(:create_word), class: "btn btn-primary" %>
-    <button class="btn btn-primary" id="btnAddWord"><%= t :add_word_input %></button>
+    <%= f.submit buttonLabel, class: "btn btn-primary" %>
+    <button class="btn btn-primary" id="btnAddWord">
+      <%= t :add_word_input %>
+    </button>
   </div>
 <% end %>

@@ -209,3 +209,84 @@ $(document).on 'ready page:load', ->
         $('#' + result.id).find('td[id="description"]').html(result.description)
       error: (result) ->
         alert 'Can\'t update category. Check information please'
+
+  id = 0
+  sizeInputWordEdit = 0
+  $('#editWordModal').on 'show.bs.modal', (e) ->
+    button = $(e.relatedTarget)
+    id = button.data('id')
+    content = $('#' + id).find('td[id="content"]').html()
+    answers = []
+    $('#' + id + ' ul li').each ->
+      answers.push($(this).text().trim())
+    sizeArray = answers.length
+    $('div[id="editWordModal"]').find('tr').remove()
+    sizeInputWordEdit = 0
+    while sizeInputWordEdit < sizeArray
+      sizeInputWordEdit++
+      $('div[id="editWordModal"]').find('#tableAddWord')
+        .append(newInputWord(sizeInputWordEdit - 1))
+    setValueRadioEdit()
+    i = 0
+    $(this).find('table input[type="text"]').each ->
+      $(this).val(answers[i])
+      i++
+    $(this).find('input[id="word_content"]').val(content)
+    correctAnswer = $('#' + id).find('li[class="correct_answer"]').val()
+    correctAnswer = 'input[value="' + correctAnswer + '"]' 
+    $(this).find(correctAnswer).prop("checked", true)
+
+  $('#editWordModal').find('form').submit (e) ->
+    e.preventDefault()
+    action = $(this).attr('action') + '/' + id
+    method = 'PUT'
+    data = $(this).serializeArray()
+    $.ajax
+      url: action
+      method: method
+      data: data
+      dataType: 'json'
+      success: (result) ->
+        $('#editWordModal').modal('toggle')
+        alert 'Update successful'
+        $('#' + result.id).find('td[id="content"]').html(result.content)
+        $('#' + result.id).find('td[id="answers"]')
+          .html(answersResult(result.answers, result.answer_right))
+      error: (result) ->
+        alert 'Can\'t update category. Check information please'
+
+  $('div[id="editWordModal"]').find('#btnAddWord').on 'click', (e) ->
+    e.preventDefault()
+    if sizeInputWordEdit < 8
+      sizeInputWordEdit++
+      $('div[id="editWordModal"]').find('#tableAddWord')
+        .append(newInputWord(sizeInputWord ))
+
+  $('div[id="editWordModal"]').find('#tableAddWord').on 'click', '.btnRemove',->
+    removeInput($(this))
+
+  removeInput = (element) ->
+    if sizeInputWordEdit > 2
+      sizeInputWordEdit--
+      element.parents('tr').remove()
+      setValueRadioEdit()
+
+  setValueRadioEdit = ->
+    index = 0
+    $('div[id="editWordModal"]').find('input[name="is_correct"]').each ->
+      $(this).val(index)
+      index++
+
+  answersResult = (answers, answerRight) ->
+    i = 0
+    res = '<ul>'
+    answers.forEach (answer) ->
+      debugger
+      if i == answerRight
+        res += '<li class=correct_answer>'
+      else
+        res += '<li>'
+      res +=  answer + '</li>'
+      i++
+    res += '</ul>'
+    return res

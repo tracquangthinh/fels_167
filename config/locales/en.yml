@@ -78,7 +78,7 @@ en:
   create_category: "Create a category"
   nothing: ""
   delete_multiple: "Delete selected"
-  delete_success: "Delete successful"
+  delete_success: "Delete successful "
   not_delete: "Something wrong happend. Please try again"
   delete_select: "Delete select"
   must_select: "Please select categories to delete or maybe it's been deleted"
