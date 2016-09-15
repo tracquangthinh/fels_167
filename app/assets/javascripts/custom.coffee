@@ -56,7 +56,6 @@ $(document).on 'ready page:load', ->
 
   headingTableCategory = ->
     res = '<tr id="tableHeading"><th></th>'
-    res += '<th class="text-center">ID</th>'
     res += '<th class="text-center">Name</th>'
     res += '<th class="text-center">Description</th>'
     res += '<th class="text-center">Total words</th></tr>'
@@ -67,7 +66,7 @@ $(document).on 'ready page:load', ->
     res += 'id="category_ids_" value="'
     res += result.id
     res += '" type="checkbox"></td>'
-    res += '<td class="col-md-1 text-center">' + result.id + '</td>'
+    res += '<input name="id" id="id" value="' + result.id + '" type="hidden">'
     res += '<td class="col-md-2 text-center">' + result.name + '</td>'
     res += '<td class="col-md-3 text-center">' + result.description + '</td>'
     res += '<td class="col-md-5 text-center">' + result.numberWords + '</td>'

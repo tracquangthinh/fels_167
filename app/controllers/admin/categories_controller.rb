@@ -3,8 +3,8 @@ class Admin::CategoriesController < ApplicationController
   before_action :verify_admin
 
   def index
-    @categories = Category.paginate page: params[:page],
-      per_page: Settings.per_page
+    @categories = Category.order(created_at: :desc).
+      paginate page: params[:page], per_page: Settings.per_page
     @category = Category.new
   end
 
@@ -18,18 +18,25 @@ class Admin::CategoriesController < ApplicationController
   end
 
   def destroy
-    ids = params[:category_ids].nil? ? params[:id] : params[:category_ids]
-    @categories = Category.find_ids ids
-    index_delete_success = []
-    if @categories
-      @categories.each do |category|
-        if Category.destroy category
-          index_delete_success.append(category.id)
-        end
+    if params[:category_ids].nil?
+      if Category.destroy params[:id]
+        flash[:success] = t(:delete_success)
+      else
+        flash[:danger] = t(:delete_fail)
       end
-      flash[:success] = t(:delete_success) + index_delete_success.join(",")
     else
-      flash[:danger] = t :must_select
+      @categories = Category.find_ids params[:category_ids]
+      index_delete_success = []
+      if @categories
+        @categories.each do |category|
+          if Category.destroy category
+            index_delete_success.append(category.id)
+          end
+        end
+        flash[:success] = t(:delete_success) + index_delete_success.join(",")
+      else
+        flash[:danger] = t :must_select
+      end
     end
     redirect_to admin_categories_path
   end
